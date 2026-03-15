@@ -1,0 +1,1 @@
+This is the computer , naval and book industries updated data and stats .html file. You will have to copy-paste the code on your notepad then save it as .html double click the file and voila! You have a full statistical analysis about those industries based on real data!
