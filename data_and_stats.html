@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Industry Statistical Analysis 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2236;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --comp-cyan: #00d4ff;
+    --comp-dark: #003d57;
+    --naval-gold: #f0a500;
+    --naval-dark: #3a2800;
+    --books-rose: #ff6b9d;
+    --books-dark: #3a001a;
+    --accent: #ffffff;
+    --grid: rgba(255,255,255,0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    color: var(--comp-cyan);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+    max-width: 900px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--comp-cyan), var(--books-rose));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-size: 1.1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .tag {
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .tag-comp { border-color: var(--comp-cyan); color: var(--comp-cyan); background: rgba(0,212,255,0.07); }
+  .tag-naval { border-color: var(--naval-gold); color: var(--naval-gold); background: rgba(240,165,0,0.07); }
+  .tag-books { border-color: var(--books-rose); color: var(--books-rose); background: rgba(255,107,157,0.07); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+  .scroll-hint::after {
+    content: '';
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.4)} }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,14,26,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 3rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-item {
+    padding: 1rem 1.5rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.comp { border-color: var(--comp-cyan); color: var(--comp-cyan); }
+  .nav-item.naval { border-color: var(--naval-gold); color: var(--naval-gold); }
+  .nav-item.books { border-color: var(--books-rose); color: var(--books-rose); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  /* ── SECTION HEADERS ── */
+  .part-header {
+    padding: 7rem 0 4rem;
+    position: relative;
+  }
+  .part-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .part-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  .part-desc {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 700px;
+    line-height: 1.75;
+  }
+
+  .part-comp .part-number { color: var(--comp-cyan); }
+  .part-comp .part-title { color: #fff; }
+  .part-comp .part-title span { color: var(--comp-cyan); }
+  .part-naval .part-number { color: var(--naval-gold); }
+  .part-naval .part-title span { color: var(--naval-gold); }
+  .part-books .part-number { color: var(--books-rose); }
+  .part-books .part-title span { color: var(--books-rose); }
+
+  .section-bar {
+    height: 3px;
+    border-radius: 3px;
+    margin-bottom: 4rem;
+  }
+  .bar-comp { background: linear-gradient(90deg, var(--comp-cyan), transparent); }
+  .bar-naval { background: linear-gradient(90deg, var(--naval-gold), transparent); }
+  .bar-books { background: linear-gradient(90deg, var(--books-rose), transparent); }
+
+  /* ── STAT CARDS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-card.comp::before { background: var(--comp-cyan); }
+  .stat-card.comp:hover { border-color: rgba(0,212,255,0.3); }
+  .stat-card.naval::before { background: var(--naval-gold); }
+  .stat-card.naval:hover { border-color: rgba(240,165,0,0.3); }
+  .stat-card.books::before { background: var(--books-rose); }
+  .stat-card.books:hover { border-color: rgba(255,107,157,0.3); }
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .stat-note {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .stat-change {
+    display: inline-block;
+    margin-top: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .up { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .down { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+  /* ── TABLES ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  thead tr {
+    background: var(--surface2);
+  }
+  thead th {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td {
+    padding: 0.9rem 1.25rem;
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  tbody td:first-child { font-weight: 500; color: #fff; }
+  .val { font-family: 'DM Mono', monospace; color: var(--comp-cyan); font-size: 0.82rem; }
+  .val-gold { font-family: 'DM Mono', monospace; color: var(--naval-gold); font-size: 0.82rem; }
+  .val-rose { font-family: 'DM Mono', monospace; color: var(--books-rose); font-size: 0.82rem; }
+
+  /* ── TEXT SECTIONS ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 3rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+  .section-subtitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 2rem 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .body-text {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    max-width: 850px;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .highlight-box {
+    background: var(--surface);
+    border-left: 3px solid;
+    border-radius: 0 12px 12px 0;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+  }
+  .hb-comp { border-color: var(--comp-cyan); background: rgba(0,212,255,0.04); }
+  .hb-naval { border-color: var(--naval-gold); background: rgba(240,165,0,0.04); }
+  .hb-books { border-color: var(--books-rose); background: rgba(255,107,157,0.04); }
+  .highlight-box p { color: var(--text); font-size: 0.95rem; line-height: 1.75; }
+  .highlight-box strong { color: #fff; }
+
+  /* ── BULLET LIST ── */
+  .bullet-list {
+    list-style: none;
+    margin: 1rem 0 1.5rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .bullet-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    font-size: 0.7rem;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+  }
+  .bl-comp li::before { color: var(--comp-cyan); }
+  .bl-naval li::before { color: var(--naval-gold); }
+  .bl-books li::before { color: var(--books-rose); }
+  .bullet-list strong { color: var(--text); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+
+  /* ── TWO COL ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  @media(max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+  .info-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 8rem;
+    padding: 4rem 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  footer p { margin-bottom: 0.5rem; }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    z-index: 200;
+  }
+  .back-top:hover { background: var(--surface); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  /* fade-in on scroll */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-label">Global Industry Report · March 2026</div>
+  <h1>Industry <em>Statistical Analysis</em> Worldwide</h1>
+  <p class="hero-sub">A comprehensive data report on three global sectors &amp; the Greek market</p>
+  <div class="hero-tags">
+    <span class="tag tag-comp">💻 Computer Industry</span>
+    <span class="tag tag-naval">⚓ Naval &amp; Shipbuilding</span>
+    <span class="tag tag-books">📚 Books &amp; Publishing</span>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-item comp" href="#computers">Computers</a>
+  <a class="nav-item naval" href="#naval-world">Naval World</a>
+  <a class="nav-item naval" href="#naval-greece">Naval Greece</a>
+  <a class="nav-item books" href="#books-world">Books World</a>
+  <a class="nav-item books" href="#books-greece">Books Greece</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART I: COMPUTER INDUSTRY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="computers">
+  <div class="container">
+    <div class="part-header part-comp fade-in">
+      <span class="part-number">Part I — Global Industry</span>
+      <h2 class="part-title">Computer &amp;<br><span>Technology Industry</span></h2>
+      <p class="part-desc">The global computing sector encompasses personal computers, semiconductors, servers, and peripherals. After steep declines in 2022–2023, the industry staged a powerful recovery in 2025 fueled by AI adoption, a Windows 10 end-of-life refresh cycle, and soaring semiconductor demand.</p>
+    </div>
+    <div class="section-bar bar-comp"></div>
+
+    <!-- PC Market Stats -->
+    <h3 class="section-title fade-in">1.1 Global PC Market</h3>
+    <p class="body-text fade-in">After two years of contraction, the global PC market posted 9.1% full-year growth in 2025 — its strongest recovery in over a decade. The expiry of Windows 10 support and rising AI-PC integration drove both enterprise refresh cycles and consumer upgrades.</p>
+
+    <div class="stats-grid fade-in">
+      <div class="stat-card comp">
+        <div class="stat-label">Global PC Shipments (2025)</div>
+        <div class="stat-value">~270–285M</div>
+        <div class="stat-note">units shipped worldwide</div>
+        <span class="stat-change up">▲ +9.1% YoY</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">PC Market Value (2025)</div>
+        <div class="stat-value">$222.6B</div>
+        <div class="stat-note">Mordor Intelligence estimate</div>
+        <span class="stat-change up">▲ Growing</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">Projected Market (2031)</div>
+        <div class="stat-value">$372.7B</div>
+        <div class="stat-note">CAGR ~8.98% through 2031</div>
+        <span class="stat-change up">▲ Long-term trend</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">Q4 2025 Shipments</div>
+        <div class="stat-value">71.5M</div>
+        <div class="stat-note">units — strongest quarter of 2025</div>
+        <span class="stat-change up">▲ +9.3% YoY</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">AI-enabled PC Share</div>
+        <div class="stat-value">~30%</div>
+        <div class="stat-note">of 2025 shipments; forecast 80% by 2027</div>
+        <span class="stat-change up">▲ Rapid adoption</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">Computer Hardware (Broad, 2025)</div>
+        <div class="stat-value">$1,507B</div>
+        <div class="stat-note">Projected $3,038B by 2035 — CAGR 7.26%</div>
+        <span class="stat-change up">▲ Expanding</span>
+      </div>
+    </div>
+
+    <!-- Vendor Table -->
+    <h3 class="section-title fade-in">1.2 Vendor Market Share — Top PC Manufacturers (2025)</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr>
+          <th>Vendor</th><th>2025 Shipments</th><th>YoY Growth</th><th>Market Share</th><th>Notes</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Lenovo</td><td class="val">~70.85M units</td><td class="val">+14.6%</td><td class="val">~26%</td><td>World's #1 PC vendor; record $18.79B Q3 revenue</td></tr>
+          <tr><td>HP Inc.</td><td class="val">~50–55M (est.)</td><td class="val">+~8%</td><td class="val">~19%</td><td>Strong commercial segment</td></tr>
+          <tr><td>Dell Technologies</td><td class="val">~45–48M (est.)</td><td class="val">+~7%</td><td class="val">~17%</td><td>Enterprise refresh key driver</td></tr>
+          <tr><td>Apple</td><td class="val">~25–27M (est.)</td><td class="val">+~10%</td><td class="val">~9%</td><td>M-series chip advantage continues</td></tr>
+          <tr><td>Asus</td><td class="val">~25M (est.)</td><td class="val">+~10%</td><td class="val">~9%</td><td>Gaming + creator segments strong</td></tr>
+          <tr><td>Others</td><td class="val">~55–65M</td><td class="val">Varies</td><td class="val">~20%</td><td>Acer, MSI, Samsung, etc.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Semiconductor -->
+    <h3 class="section-title fade-in">1.3 Semiconductor Industry — The Engine of Computing</h3>
+    <p class="body-text fade-in">Semiconductors are the foundational layer of all computing. The sector experienced an extraordinary boom in 2025, driven by AI data center buildouts, memory component surges, and geopolitical chip investment programs.</p>
+
+    <div class="stats-grid fade-in">
+      <div class="stat-card comp">
+        <div class="stat-label">Global Semiconductor Sales (2025)</div>
+        <div class="stat-value">$791.7B</div>
+        <div class="stat-note">SIA data — all-time record</div>
+        <span class="stat-change up">▲ +25.6% over 2024</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">Global Semiconductor Sales (2024)</div>
+        <div class="stat-value">$630.5B</div>
+        <div class="stat-note">SIA / $655.9B per Gartner</div>
+        <span class="stat-change up">▲ +21% YoY</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">2026 WSTS Forecast</div>
+        <div class="stat-value">~$1T</div>
+        <div class="stat-note">First time approaching $1 trillion mark</div>
+        <span class="stat-change up">▲ Historic milestone</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">NVIDIA Market Share (2024)</div>
+        <div class="stat-value">11.7%</div>
+        <div class="stat-note">Overtook Samsung — #1 globally</div>
+        <span class="stat-change up">▲ New leader</span>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">Asia-Pacific Semiconductor Share</div>
+        <div class="stat-value">~65.7%</div>
+        <div class="stat-note">Dominant production region</div>
+      </div>
+      <div class="stat-card comp">
+        <div class="stat-label">China Revenue (2025)</div>
+        <div class="stat-value">$206.7B</div>
+        <div class="stat-note">Largest single-country market</div>
+      </div>
+    </div>
+
+    <!-- Regional -->
+    <h3 class="section-title fade-in">1.4 Regional PC Revenue Distribution (2025)</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Region</th><th>Revenue Share</th><th>Key Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Asia-Pacific</td><td class="val">~37%</td><td>Production hub + domestic demand leader</td></tr>
+          <tr><td>North America</td><td class="val">~31%</td><td>US = single largest country market globally</td></tr>
+          <tr><td>Europe</td><td class="val">~19%</td><td>Strong enterprise refresh demand in 2025</td></tr>
+          <tr><td>Rest of World</td><td class="val">~13%</td><td>Latin America, MEA — emerging growth markets</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Trends -->
+    <h3 class="section-title fade-in">1.5 Key Industry Trends (2025–2030)</h3>
+    <ul class="bullet-list bl-comp fade-in">
+      <li><strong>AI PC Integration:</strong> 54% of enterprises integrating AI chips into procurement cycles; AI-PC penetration expected to reach 93.9% by 2028 (Lenovo forecasts 80% by 2027).</li>
+      <li><strong>Memory Crunch:</strong> DRAM and NAND flash component costs for mid-range PCs rose an estimated 40–70% during 2025, driven by AI data center demand outpacing foundry output.</li>
+      <li><strong>Windows 10 Sunset (Oct 2025):</strong> End-of-support triggered the largest enterprise hardware refresh cycle in a decade, boosting commercial PC sales across all major vendors.</li>
+      <li><strong>Geopolitical Reshaping:</strong> US–China chip export restrictions continue to redraw global supply chains. TSMC committed $65 billion to Arizona fabs to reduce geopolitical concentration risk.</li>
+      <li><strong>Green Computing Surge:</strong> 46% demand increase for energy-efficient hardware as data center power consumption becomes a regulatory and ESG priority.</li>
+      <li><strong>Edge &amp; IoT Expansion:</strong> Compact AI-enabled devices for industrial IoT, healthcare, and smart cities represent the fastest-growing non-consumer segment.</li>
+    </ul>
+
+    <div class="highlight-box hb-comp fade-in">
+      <p><strong>NVIDIA's Historic Rise:</strong> In 2024, NVIDIA claimed the #1 global semiconductor revenue position for the first time — overtaking Samsung and Intel. The company's extraordinary GPU demand for AI workloads represents a seismic value shift in the semiconductor industry: from general-purpose CPUs to AI-optimized accelerators. This single trend is reshaping capital allocation across the entire global computing supply chain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART II: NAVAL INDUSTRY — WORLD -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="naval-world">
+  <div class="container">
+    <div class="part-header part-naval fade-in">
+      <span class="part-number">Part II — Global Industry</span>
+      <h2 class="part-title">Naval &amp; Shipbuilding<br><span>Industry</span></h2>
+      <p class="part-desc">The global naval sector is experiencing a structural renaissance driven by geopolitical realignment, NATO defense spending mandates, South China Sea tensions, and rapid technological innovation in autonomous vessel systems and stealth design.</p>
+    </div>
+    <div class="section-bar bar-naval"></div>
+
+    <h3 class="section-title fade-in">2.1 Market Size &amp; Growth</h3>
+    <p class="body-text fade-in">Estimates vary by scope — military-only vs. military-plus-commercial. Below is the authoritative consensus range across major research houses.</p>
+
+    <div class="stats-grid fade-in">
+      <div class="stat-card naval">
+        <div class="stat-label">Naval Shipbuilding (Military, 2025)</div>
+        <div class="stat-value">$102.4B</div>
+        <div class="stat-note">Projected $142.4B by 2034 — CAGR 2.26%</div>
+        <span class="stat-change up">▲ Growing</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Military Shipbuilding &amp; Submarines (2024)</div>
+        <div class="stat-value">$79.5B</div>
+        <div class="stat-note">Projected $129.5B by 2035 — CAGR 4.54%</div>
+        <span class="stat-change up">▲ Strong CAGR</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Warship &amp; Naval Vessels (2025)</div>
+        <div class="stat-value">$75.1B</div>
+        <div class="stat-note">Projected $122.4B by 2034 — CAGR 5.41%</div>
+        <span class="stat-change up">▲ +5.41% CAGR</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">All Shipbuilding incl. Commercial (2024)</div>
+        <div class="stat-value">$115.2B</div>
+        <div class="stat-note">Projected $140.3B by 2030 — CAGR 3.3%</div>
+        <span class="stat-change up">▲ Broad sector</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Active Naval Vessels Worldwide</div>
+        <div class="stat-value">~8,700</div>
+        <div class="stat-note">Destroyers, frigates, submarines, patrol</div>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Industry Workforce</div>
+        <div class="stat-value">~1.5M</div>
+        <div class="stat-note">Skilled workers across 1,200+ operational shipyards</div>
+      </div>
+    </div>
+
+    <h3 class="section-title fade-in">2.2 Regional Market Dominance</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Region</th><th>Market Share</th><th>Key Players</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>North America</td><td class="val-gold">~32–47%</td><td>HII, General Dynamics (Electric Boat)</td><td>World's largest defense budgets; 120+ contracts 2023–25</td></tr>
+          <tr><td>China (Asia-Pacific)</td><td class="val-gold">~17% (CSSC)</td><td>CSSC, Hyundai HI</td><td>Fastest-growing fleet; 300+ naval projects delivered 2020–25</td></tr>
+          <tr><td>Europe</td><td class="val-gold">~19%</td><td>BAE Systems, Naval Group, Thyssenkrupp</td><td>NATO rearmament surge driving multi-year order books</td></tr>
+          <tr><td>Asia-Pacific (ex-China)</td><td class="val-gold">~15%</td><td>Hyundai HI (12% global), Mitsubishi</td><td>South Korea and Japan — technologically advanced builders</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">2.3 Global Fleet &amp; Industry Statistics</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Total active naval vessels globally</td><td class="val-gold">~8,700</td></tr>
+          <tr><td>Operational shipyards worldwide</td><td class="val-gold">1,200+ across 50+ nations</td></tr>
+          <tr><td>Global supplier network</td><td class="val-gold">2,000+ companies</td></tr>
+          <tr><td>Automation adoption in shipyards</td><td class="val-gold">65%+</td></tr>
+          <tr><td>Naval programs launched (2023–2025)</td><td class="val-gold">35+ new programs</td></tr>
+          <tr><td>Unmanned Surface Vessel (USV) demand growth</td><td class="val-gold">+58% in 2 years</td></tr>
+          <tr><td>US Navy fleet size</td><td class="val-gold">490+ ships (92 destroyers, 70 submarines, 11 carriers)</td></tr>
+          <tr><td>New contracts awarded — US alone (2023–25)</td><td class="val-gold">120+</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">2.4 Leading Global Defense Shipbuilders</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Company</th><th>Country</th><th>Specialization</th><th>Notable Programs</th></tr></thead>
+        <tbody>
+          <tr><td>Huntington Ingalls (HII)</td><td>USA</td><td>Nuclear carriers, submarines</td><td>Gerald R. Ford class, Virginia class SSN</td></tr>
+          <tr><td>General Dynamics – Electric Boat</td><td>USA</td><td>Nuclear submarines</td><td>Columbia-class SSBN (strategic deterrent)</td></tr>
+          <tr><td>BAE Systems</td><td>UK</td><td>Frigates, submarines</td><td>Type 26 (City-class) frigate</td></tr>
+          <tr><td>Naval Group</td><td>France</td><td>Submarines, frigates</td><td>FDI (Belharra) frigate, Scorpene submarine</td></tr>
+          <tr><td>Thyssenkrupp Marine Systems</td><td>Germany</td><td>Submarines</td><td>P-75(I) India project, Type 212</td></tr>
+          <tr><td>CSSC</td><td>China</td><td>Full range</td><td>Type 052D/055 destroyers, aircraft carriers</td></tr>
+          <tr><td>Hyundai Heavy Industries</td><td>South Korea</td><td>Warships, multi-type</td><td>KDX-III Aegis destroyers, LPH amphibious</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">2.5 Technology &amp; Industry Trends</h3>
+    <ul class="bullet-list bl-naval fade-in">
+      <li><strong>AI &amp; Autonomous Systems:</strong> 41% rise in autonomous naval vessel integration; USV demand surged 58% in just two years. Unmanned mine-sweepers, ISR drones, and autonomous supply vessels are entering operational service.</li>
+      <li><strong>Stealth Technology:</strong> 41% increase in demand for radar-absorbing hull coatings and signature-management materials in new surface combatant contracts.</li>
+      <li><strong>Additive Manufacturing:</strong> +57% surge in 3D printing for ship components since 2022, reducing supply chain dependency for critical spare parts.</li>
+      <li><strong>Green Propulsion:</strong> LNG and hybrid propulsion in 48% of new commercial-naval vessels; 55% of shipyards adopting sustainability certification programs.</li>
+      <li><strong>Modular Construction:</strong> Construction time reduced by ~33% through modular block-build methods — now standard in South Korean, Japanese, and emerging European yards.</li>
+      <li><strong>NATO Expansion &amp; Rearmament:</strong> Poland at 3.8% of GDP defense spend; Finland at 2.4% — Eastern European rearmament generating multi-billion naval procurement cycles for 2025–2032.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART III: NAVAL INDUSTRY — GREECE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="naval-greece">
+  <div class="container">
+    <div class="part-header part-naval fade-in">
+      <span class="part-number">Part III — Greece Focus</span>
+      <h2 class="part-title">Greek Naval &amp;<br><span>Shipbuilding Industry</span></h2>
+      <p class="part-desc">Greece's shipbuilding sector is undergoing its most dramatic reversal in modern history — from near-total collapse after the 2010 debt crisis to a resurgent, internationally competitive industry attracting NATO allies and private capital alike.</p>
+    </div>
+    <div class="section-bar bar-naval"></div>
+
+    <h3 class="section-title fade-in">3.1 Key Statistics — Greek Shipbuilding</h3>
+    <div class="stats-grid fade-in">
+      <div class="stat-card naval">
+        <div class="stat-label">Greek Shipbuilding Market (2025)</div>
+        <div class="stat-value">€90.8M</div>
+        <div class="stat-note">IBISWorld — domestic Greek market</div>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Ships Repaired in Greek Yards (2024)</div>
+        <div class="stat-value">700</div>
+        <div class="stat-note">Up from 330 in 2013 — a 112% increase</div>
+        <span class="stat-change up">▲ +112% vs 2013</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">ONEX Group Turnover (2024)</div>
+        <div class="stat-value">€120M+</div>
+        <div class="stat-note">Syros + Elefsina combined; up from max €20–21M historically</div>
+        <span class="stat-change up">▲ ~600% increase</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">EU SAFE Defense Fund (Greece)</div>
+        <div class="stat-value">€787.6M</div>
+        <div class="stat-note">Approved allocation for defense &amp; shipbuilding</div>
+        <span class="stat-change up">▲ Historic investment</span>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Active Shipbuilding Businesses</div>
+        <div class="stat-value">148</div>
+        <div class="stat-note">Operating in Greece (2025)</div>
+      </div>
+      <div class="stat-card naval">
+        <div class="stat-label">Greek-owned Fleet (2025)</div>
+        <div class="stat-value">4,221</div>
+        <div class="stat-note">ships — record high; ~17% of global new ship orders</div>
+        <span class="stat-change up">▲ Record fleet</span>
+      </div>
+    </div>
+
+    <!-- Shipyards -->
+    <h3 class="section-title fade-in">3.2 Major Greek Shipyards</h3>
+
+    <div class="two-col fade-in">
+      <div class="info-card">
+        <h4>⚓ Skaramagas Shipyards</h4>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.75">Founded 1939. Acquired by shipowner George Prokopiou in March 2023 and commercially relaunched February 2024. In its first year, completed work on <strong style="color:var(--text)">37 vessels</strong> including Suezmax tankers and mega-yachts. Dry Dock No. 1 is the only Greek facility capable of accommodating a 274.2-metre Suezmax hull. Ambitions to become a Mediterranean leader in complex repairs and LNG carrier servicing.</p>
+      </div>
+      <div class="info-card">
+        <h4>🛡️ Salamis Shipyards</h4>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.75">Greece's most internationally significant defense builder. Via a collaboration with France's <strong style="color:var(--text)">Naval Group</strong> (from Oct 2022), Salamis fabricates hull blocks for the FDI Belharra frigates with a remarkable <strong style="color:var(--text)">80.4% pre-equipping completeness</strong> — among the highest recorded globally. A six-year Follow-on-Support agreement signed Nov 2024 covers both Hellenic Navy and French FDI fleets in Eastern Mediterranean and Red Sea.</p>
+      </div>
+    </div>
+    <div class="info-card fade-in" style="margin-top:1.25rem">
+      <h4>🏗️ ONEX Shipyards (Neorion/Syros + Elefsina)</h4>
+      <p style="color:var(--muted);font-size:0.88rem;line-height:1.75">Acquired by NY-based ONEX group in 2019. Together the two yards have repaired <strong style="color:var(--text)">612 vessels</strong> since acquisition. Combined turnover leapt from a historic maximum of €20–21M to over <strong style="color:var(--text)">€120M in 2024</strong> — nearly a 600% increase — through capital injection, workforce expansion, and modern dry-dock upgrades. ONEX now positions Syros + Elefsina as a unified cluster capable of new construction.</p>
+    </div>
+
+    <!-- Hellenic Navy Table -->
+    <h3 class="section-title fade-in">3.3 Hellenic Navy Modernization Programs</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Program</th><th>Details</th><th>Strategic Significance</th></tr></thead>
+        <tbody>
+          <tr><td>FDI Frigates (Belharra-class)</td><td class="val-gold">4 frigates ordered from France; 3rd unit (Formion) launched June 2025</td><td>Most advanced surface combatant in Greek naval history</td></tr>
+          <tr><td>New Submarine Procurement</td><td class="val-gold">4 submarines planned; international tender underway</td><td>Sweden, Germany, France, Italy, South Korea competing — Greece's largest potential defense contract in decades</td></tr>
+          <tr><td>Island-class Patrol Vessels</td><td class="val-gold">4 units upgraded and reactivated by Salamis Shipyards</td><td>Coastal Aegean defense enhancement</td></tr>
+          <tr><td>US Constellation Frigate Co-production</td><td class="val-gold">Discussions underway with US for joint design/production participation</td><td>Deepens US–Greece strategic defense partnership</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box hb-naval fade-in">
+      <p><strong>Greece's Maritime Global Weight:</strong> Greek shipowners control the world's largest merchant fleet by tonnage at 4,221 ships in 2025 — a record high. Greek-interest orders represent approximately <strong>17% of total global shipbuilding contracts</strong>, giving Greek buyers extraordinary leverage with Asian and European builders. Greece's domestic EU shipbuilding cluster produces around €43 billion in annual production value collectively — surpassing Asia's combined European-equivalent output.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART IV: BOOKS INDUSTRY — WORLD -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="books-world">
+  <div class="container">
+    <div class="part-header part-books fade-in">
+      <span class="part-number">Part IV — Global Industry</span>
+      <h2 class="part-title">Books &amp; Publishing<br><span>Industry</span></h2>
+      <p class="part-desc">The global publishing market is a mature but structurally transforming industry. Print books have proven unexpectedly resilient in the digital age, while audiobooks and e-books are expanding total market reach. AI-assisted production, self-publishing platforms, and BookTok are reshaping creation, distribution, and discovery.</p>
+    </div>
+    <div class="section-bar bar-books"></div>
+
+    <h3 class="section-title fade-in">4.1 Global Market Size &amp; Projections</h3>
+    <p class="body-text fade-in">Note: Market size estimates vary across research methodologies (trade only vs. educational vs. all formats). All figures below represent reliable consensus ranges from multiple major publishers of market intelligence.</p>
+
+    <div class="stats-grid fade-in">
+      <div class="stat-card books">
+        <div class="stat-label">Global Books Market (2024)</div>
+        <div class="stat-value">$136–151B</div>
+        <div class="stat-note">Fortune BI / Grand View Research</div>
+        <span class="stat-change up">▲ Growing</span>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">Global Books Market (2025)</div>
+        <div class="stat-value">$131–155B</div>
+        <div class="stat-note">Consensus range across research houses</div>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">Projected Market (2030)</div>
+        <div class="stat-value">$158–202B</div>
+        <div class="stat-note">CAGR 3.1–5.1% depending on scope</div>
+        <span class="stat-change up">▲ Expanding</span>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">US Consumer Trade Books (2024)</div>
+        <div class="stat-value">$21.2B</div>
+        <div class="stat-note">AAP data</div>
+        <span class="stat-change up">▲ +4.4% YoY</span>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">US Print Book Units Sold (2024)</div>
+        <div class="stat-value">783M</div>
+        <div class="stat-note">units — print remains dominant format</div>
+        <span class="stat-change up">▲ +~1% vs 2023</span>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">European Book Market Turnover (2024)</div>
+        <div class="stat-value">€24.9B</div>
+        <div class="stat-note">FEP data — all-time nominal record</div>
+        <span class="stat-change up">▲ Record year</span>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">Audiobook Market (US, 2024)</div>
+        <div class="stat-value">$1.8B</div>
+        <div class="stat-note">Audible monthly app usage +12,000% since 2020</div>
+        <span class="stat-change up">▲ Fastest growing</span>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">E-book Market (Global, 2025)</div>
+        <div class="stat-value">$14.92B</div>
+        <div class="stat-note">Online sales CAGR 7.1%</div>
+        <span class="stat-change up">▲ +7.1% CAGR</span>
+      </div>
+    </div>
+
+    <h3 class="section-title fade-in">4.2 Segmentation by Genre (US, 2024)</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Segment</th><th>Revenue / Share</th><th>YoY Change</th><th>Key Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Adult Fiction (Consumer)</td><td class="val-rose">$3.26B (US)</td><td class="val-rose">+12.6%</td><td>Largest fiction category; fantasy/romantasy surge (BookTok)</td></tr>
+          <tr><td>Adult Nonfiction (Consumer)</td><td class="val-rose">$2.88B (US)</td><td class="val-rose">+1.3%</td><td>Steady performer; political &amp; self-help strong</td></tr>
+          <tr><td>Children's / YA Fiction</td><td class="val-rose">$1.99B (US)</td><td class="val-rose">Growing</td><td>BookTok-driven romantasy boom for YA readers</td></tr>
+          <tr><td>Religious Books</td><td class="val-rose">$909.2M (US)</td><td class="val-rose">+18.9%</td><td>Fastest-growing category in US consumer market</td></tr>
+          <tr><td>Higher Education</td><td class="val-rose">Growing</td><td class="val-rose">+6.7%</td><td>Digital and hybrid textbooks recovering post-COVID</td></tr>
+          <tr><td>Educational Books (Global)</td><td class="val-rose">~20.65% share</td><td class="val-rose">Largest segment</td><td>Textbook demand rising in Africa and Asia most rapidly</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">4.3 Format Distribution — Print vs. Digital</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Format</th><th>US Market Share</th><th>Trend &amp; Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Print (Hardcover + Paperback)</td><td class="val-rose">~75%</td><td>Resilient. BookTok influenced ~59M US print sales in 2024 alone</td></tr>
+          <tr><td>E-books</td><td class="val-rose">~20%</td><td>Stable; growth concentrated in academic and professional segments</td></tr>
+          <tr><td>Audiobooks</td><td class="val-rose">~5–8%</td><td>Fastest-growing. 63% consumed via subscription. Spotify, Scribd, Audible competition intensifying</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">4.4 Regional Analysis</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Region</th><th>2025 Revenue</th><th>Key Notes</th></tr></thead>
+        <tbody>
+          <tr><td>North America</td><td class="val-rose">~$48.7B (~33%)</td><td>US dominates; largest consumer fiction market globally</td></tr>
+          <tr><td>Europe</td><td class="val-rose">€24.9B (2024 record)</td><td>Germany, France, UK lead; FEP nominal record in 2024</td></tr>
+          <tr><td>Asia-Pacific</td><td class="val-rose">~$25–30B (~20%)</td><td>China, India fastest-growing consumer markets</td></tr>
+          <tr><td>Latin America</td><td class="val-rose">~$8–10B (~6%)</td><td>Digital adoption accelerating; Brazil leads regionally</td></tr>
+          <tr><td>Middle East &amp; Africa</td><td class="val-rose">~$4–6B (~4%)</td><td>Low base but high growth trajectory; educational segment dominant</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">4.5 Key Trends Reshaping Publishing</h3>
+    <ul class="bullet-list bl-books fade-in">
+      <li><strong>BookTok Effect:</strong> TikTok's #BookTok community directly influenced approximately 59 million US print book sales in 2024 — creating overnight bestsellers and reviving backlist titles years after initial publication.</li>
+      <li><strong>Self-Publishing Boom:</strong> Platforms like Amazon KDP, Smashwords, and Draft2Digital have democratized authorship. Self-published titles now represent a significant and growing share of e-book sales globally.</li>
+      <li><strong>AI in Publishing:</strong> AI tools are being adopted across manuscript editing, cover design, marketing copy, and audio narration. Publishers are debating, legislating, and experimenting with generative AI for content creation and metadata optimization.</li>
+      <li><strong>Subscription Models:</strong> Kindle Unlimited, Scribd, and Audible continue growing. 63% of audiobooks are now consumed via subscription — fundamentally changing revenue-per-book economics for authors and publishers.</li>
+      <li><strong>Print Resilience:</strong> Despite decades of predictions of print's demise, physical books maintain ~75% of consumer trade market share. Special editions, collector's formats, and aesthetically designed books thrive among younger demographics.</li>
+      <li><strong>Big Five Consolidation:</strong> Penguin Random House, HarperCollins, Simon &amp; Schuster, Hachette, and Macmillan continue to dominate trade publishing, though facing increasing competition from mid-size independents and direct-to-reader models.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART V: BOOKS INDUSTRY — GREECE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="books-greece">
+  <div class="container">
+    <div class="part-header part-books fade-in">
+      <span class="part-number">Part V — Greece Focus</span>
+      <h2 class="part-title">Greek Books &amp;<br><span>Publishing Industry</span></h2>
+      <p class="part-desc">Greece maintains a rich literary culture with a highly educated readership. The domestic publishing market navigated economic austerity and post-pandemic recovery while grappling with digital disruption, consolidation among publishers, and shifting reading habits among younger Greeks.</p>
+    </div>
+    <div class="section-bar bar-books"></div>
+
+    <h3 class="section-title fade-in">5.1 Greek Book Market Statistics</h3>
+    <div class="stats-grid fade-in">
+      <div class="stat-card books">
+        <div class="stat-label">Greek Book Market Revenue</div>
+        <div class="stat-value">€350–450M</div>
+        <div class="stat-note">Estimated annual market; includes all formats and channels</div>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">Publishers in Greece</div>
+        <div class="stat-value">~700–900</div>
+        <div class="stat-note">Active publishing houses; highly fragmented market</div>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">New Titles Published Annually</div>
+        <div class="stat-value">~10,000+</div>
+        <div class="stat-note">In Greek language; significant proportion translations</div>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">Greeks Who Read Regularly</div>
+        <div class="stat-value">~55–60%</div>
+        <div class="stat-note">Report reading at least one book per year (Eurobarometer)</div>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">Books Read Per Year (avg. Greek reader)</div>
+        <div class="stat-value">4–6 books</div>
+        <div class="stat-note">Below EU average of ~7–8; gap narrowing post-2020</div>
+      </div>
+      <div class="stat-card books">
+        <div class="stat-label">E-book Penetration in Greece</div>
+        <div class="stat-value">~10–15%</div>
+        <div class="stat-note">Below EU average; print remains overwhelmingly dominant</div>
+      </div>
+    </div>
+
+    <h3 class="section-title fade-in">5.2 Market Structure &amp; Major Players</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Publisher / Group</th><th>Role</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Patakis Publishers</td><td class="val-rose">One of the largest Greek groups</td><td>Wide catalog; fiction, nonfiction, children's; strong distribution network</td></tr>
+          <tr><td>Kastaniotis Editions</td><td class="val-rose">Major Greek trade publisher</td><td>Literary fiction, biography, history; prestigious Greek authors</td></tr>
+          <tr><td>Metaichmio</td><td class="val-rose">Major trade publisher</td><td>Strong in contemporary fiction, self-help, translations of international bestsellers</td></tr>
+          <tr><td>Psichogios</td><td class="val-rose">Leading popular fiction</td><td>Bestseller-focused; crime, romance, thrillers — largest circulation titles</td></tr>
+          <tr><td>Ikaros</td><td class="val-rose">Literary &amp; academic</td><td>High literary prestige; poetry, philosophy, classic translations</td></tr>
+          <tr><td>Athens Book Fair (Politeia)</td><td class="val-rose">Annual flagship event</td><td>Key industry barometer; attendance and sales reflect market sentiment</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">5.3 Distribution &amp; Sales Channels</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Channel</th><th>Share of Sales</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td>Physical Bookstores</td><td class="val-rose">~55–60%</td><td>Dominant but declining; ~1,200–1,500 bookshops across Greece</td></tr>
+          <tr><td>Supermarkets &amp; Kiosks</td><td class="val-rose">~12–15%</td><td>Stable; popular fiction, magazines, newspapers</td></tr>
+          <tr><td>Online / E-commerce</td><td class="val-rose">~20–25%</td><td>Rapidly growing; Vivlio.gr, Biblionet, Amazon Greece (via .com)</td></tr>
+          <tr><td>Library &amp; Institutional</td><td class="val-rose">~5–8%</td><td>Stable; public library network underfunded but intact</td></tr>
+          <tr><td>E-books &amp; Digital</td><td class="val-rose">~5–10%</td><td>Growing from a very low base; Bookmate, Storytel available in Greece</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title fade-in">5.4 Reading Culture &amp; Habits</h3>
+    <ul class="bullet-list bl-books fade-in">
+      <li><strong>Genre Preferences:</strong> Greek readers favor crime/thriller fiction (led by Petros Markaris, Greece's internationally celebrated crime author), historical fiction, and contemporary translated fiction. Self-help and personal development are the fastest-growing nonfiction categories.</li>
+      <li><strong>Translation Market:</strong> A significant proportion — estimated 35–45% — of books sold in Greece are translations, predominantly from English, French, and Scandinavian languages. Scandinavian crime fiction has a particularly strong Greek readership.</li>
+      <li><strong>Youth Reading Decline &amp; Recovery:</strong> Reading rates among 15–25 year-olds dropped sharply during austerity years (2010–2017) but showed recovery signals post-2020. Social media BookTok influence is beginning to appear in Greek youth reading trends.</li>
+      <li><strong>Thessaloniki International Book Fair:</strong> One of the most important book events in Southeastern Europe, the annual Thessaloniki fair is a key industry gathering, cultural event, and international rights market for Greek publishers.</li>
+      <li><strong>Greek Literature Internationally:</strong> Greek authors receive growing international attention. Works by authors such as Amanda Michalopoulou, Christos Ikonomou, and Ersi Sotiropoulos are translated and distributed globally. Greek mythology-inspired fiction remains perennially popular worldwide.</li>
+      <li><strong>Publishing Consolidation:</strong> Like elsewhere in Europe, Greek publishing has seen gradual consolidation, with larger groups acquiring smaller imprints. Fragmentation remains high relative to Western European peers, with hundreds of micro-publishers co-existing alongside the major houses.</li>
+    </ul>
+
+    <div class="highlight-box hb-books fade-in">
+      <p><strong>Greece's Unique Publishing Context:</strong> Greece publishes an impressive number of titles relative to its population of ~10.5 million — approximately 10,000+ new Greek-language titles annually. The country has a deep literary tradition, high university graduation rates, and a culture of public intellectual discourse that supports a vigorous independent press. The main structural challenge is market fragmentation: too many publishers competing for a relatively small domestic readership, which suppresses per-title profitability and limits investment in author development and international rights exploitation.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Final Summary -->
+    <h3 class="section-title fade-in" style="text-align:center;margin-bottom:2rem">Summary — Three Industries at a Glance</h3>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead><tr><th>Industry</th><th>Global Market Size</th><th>Key Growth Driver</th><th>Greece's Position</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>💻 Computer &amp; Technology</td>
+            <td class="val">$1,507B (hardware broad) / $222.6B (PC)</td>
+            <td>AI integration, Windows 10 sunset, semiconductor boom</td>
+            <td>Consumer market; no major domestic manufacturing</td>
+          </tr>
+          <tr>
+            <td>⚓ Naval &amp; Shipbuilding</td>
+            <td class="val-gold">$75–115B (military) / $115B (all)</td>
+            <td>NATO rearmament, geopolitical tensions, autonomous vessels</td>
+            <td>Resurgent; Skaramagas, Salamis, ONEX — FDI frigate blocks, NATO partnerships</td>
+          </tr>
+          <tr>
+            <td>📚 Books &amp; Publishing</td>
+            <td class="val-rose">$131–155B (2025)</td>
+            <td>BookTok, audiobooks, AI tools, self-publishing, print resilience</td>
+            <td>~€350–450M market; 700–900 publishers; rich literary culture; low e-book adoption</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p><strong>Global Industry Statistical Analysis 2026</strong></p>
+    <p>Data sourced from: Gartner, IDC, SIA, WSTS, Mordor Intelligence, IBISWorld, FEP, AAP, Grand View Research, Fortune Business Insights, Straits Research, Naval industry research reports, and publicly available government and industry disclosures.</p>
+    <p style="margin-top:1rem;font-size:0.75rem">Compiled March 2026 · All market estimates represent research consensus ranges and should be treated as indicative rather than definitive figures. Market size definitions and methodologies vary across research sources.</p>
+  </div>
+</footer>
+
+<a class="back-top" href="#top" title="Back to top">↑</a>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navItems.forEach(n => {
+      n.style.opacity = n.getAttribute('href') === '#' + current ? '1' : '0.55';
+    });
+  });
+</script>
+</body>
+</html>
